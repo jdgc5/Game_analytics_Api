@@ -1,0 +1,26 @@
+services:
+  mongo:
+    image: mongo:6
+    container_name: gameanalytics-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+
+  api:
+    build: .
+    container_name: gameanalytics-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/gameanalytics
+      - PORT=3000
+    volumes:
+      - .:/app
+    command: npm run dev
+
+volumes:
+  mongo_data:
