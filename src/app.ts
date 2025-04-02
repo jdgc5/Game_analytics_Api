@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import eventRoutes from './routes/gameSession';
+import eventRoutes from './routes/events';
 import reportRoutes from './routes/report';
 
 dotenv.config();

@@ -12,8 +12,28 @@ export const generateReport = async (_req: Request, res: Response) => {
     res.send(buffer);
 };
 
-export const generateReportPlayer = async (_req: Request, res: Response) =>{
-    
+export const generateReportPlayer = async (req: Request, res: Response) => {
+    const { playerId } = req.params;
 
+    if (!playerId) {
+        return res.status(400).json({ message: "Missing playerId parameter" });
+    }
 
-}
+    try {
+        const sessions = await Event.find({ playerId }).lean();
+
+        if (!sessions.length) {
+            return res.status(404).json({ message: "No data found for player" });
+        }
+
+        const buffer = await exportAttemptsToExcel(sessions);
+
+        res.setHeader('Content-Disposition', `attachment; filename="report-${playerId}.xlsx"`);
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.send(buffer);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error generating player report" });
+    }
+};
+

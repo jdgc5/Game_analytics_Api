@@ -1,7 +1,7 @@
 # Game Analytics API
 
 Este microservicio está diseñado para recibir datos de partidas de jugadores y almacenarlos en una base de datos MongoDB. 
-Además, permite exportar estos datos en formato Excel 
+Además, permite exportar estos datos en formato Excel (para más info de los endpoints consulta `Endpoints Disponibles`) 
 
 ## ¿Qué hace este servicio?
 
@@ -9,7 +9,7 @@ Además, permite exportar estos datos en formato Excel
 - Guarda los datos en MongoDB.
 - Exporta los datos a Excel (`.xlsx`).
 - Está preparado para integrarse con cualquier frontend o juego móvil que use HTTP.
-- Puede ejecutarse de forma local o mediante Docker Compose.
+- Puede ejecutarse de forma local o mediante Docker Compose (próximamente en nube mediante pulumi)
 
 ## Tecnologías utilizadas
 
@@ -18,7 +18,7 @@ Además, permite exportar estos datos en formato Excel
 - MongoDB (Mongoose)
 - ExcelJS (para exportar a Excel)
 - Jest + ts-jest (para testing)
-- Pulumi (infraestructura como código)
+- Pulumi (infraestructura como código) * Pending
 - Docker + Docker Compose
 
 ## Instalación (local)
@@ -65,8 +65,7 @@ Levanta todo (API + MongoDB) con:
 docker-compose up --build
 ```
 
-El servicio estará disponible en:  
-👉 `http://localhost:3000`
+La API estará disponible en:  `http://localhost:3000`
 
 ---
 
@@ -82,18 +81,19 @@ npm test
 
 ### POST `/events`
 
-Envía un evento de partida:
+Si quieres enviar un evento de partida, debes utilizar este formato raw Json como body:
 
 ```json
 {
   "playerId": "abc123",
   "level": 5,
   "attemptNumber":1,
-  "success":"Yes",
+  "success":true,
   "stars": 3,
   "waves": 2,
   "timeSpent": 45,
-  "timestamp": "2025-04-02T10:30:00Z"
+  "timestamp": "2025-04-02T10:30:00Z",
+  "endedAt": "2025-04-02T10:30:45Z"
 }
 ```
 
@@ -101,7 +101,14 @@ Envía un evento de partida:
 
 Genera y descarga un archivo `report.xlsx` con todos los eventos en formato Excel.
 
-> En Postman, usa el botón **"Send and Download"** para guardar el archivo en tu equipo.
+En Postman o aplicación similar, usa el botón **"Send and Download"** para guardar el archivo donde desees.
+
+### GET  `/report/playerId`
+
+Genera y descarga un archivo `report-${playerId}.xlsx` con todos los eventos
+en formato Excel.
+
+En Postman o aplicación similar, usa el botón **"Send and Download"** para guardar el archivo donde desees.
 
 ---
 
