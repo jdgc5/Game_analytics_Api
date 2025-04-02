@@ -5,7 +5,7 @@ export const exportEventsToExcel = async (events: IGameEvent[]) => {
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet("Game Events");
 
-    // Main title (Row 1)
+    // Main title 
     worksheet.mergeCells("A1", "F1");
     const titleCell = worksheet.getCell("A1");
     titleCell.value = "Player Session Report";
@@ -14,11 +14,11 @@ export const exportEventsToExcel = async (events: IGameEvent[]) => {
     titleCell.fill = {
         type: "pattern",
         pattern: "solid",
-        fgColor: { argb: "FF2E86C1" }, // Blue background
+        fgColor: { argb: "FF2E86C1" }, 
     };
     worksheet.getRow(1).height = 50;
 
-    // Column headers (Row 2)
+    // Column headers 
     const headers = ["Player ID", "Level", "Stars", "Waves", "Time Spent (s)", "Timestamp"];
     worksheet.addRow(headers);
 
@@ -29,7 +29,7 @@ export const exportEventsToExcel = async (events: IGameEvent[]) => {
         cell.fill = {
             type: "pattern",
             pattern: "solid",
-            fgColor: { argb: "FFABEBC6" }, // Light green background
+            fgColor: { argb: "FFABEBC6" }, 
         };
         cell.border = {
             top: { style: "thin" },
@@ -39,7 +39,7 @@ export const exportEventsToExcel = async (events: IGameEvent[]) => {
         };
     });
 
-    // Column configuration with formatting
+    // Column configuration 
     worksheet.columns = [
         { key: "playerId", width: 25 },
         { key: "level", width: 10 },
@@ -49,7 +49,7 @@ export const exportEventsToExcel = async (events: IGameEvent[]) => {
         {
             key: "timestamp",
             width: 25,
-            style: { numFmt: "dd/mm/yyyy hh:mm" }, // Apply date format
+            style: { numFmt: "dd/mm/yyyy hh:mm" }, 
         },
     ];
 
@@ -61,11 +61,11 @@ export const exportEventsToExcel = async (events: IGameEvent[]) => {
             event.stars,
             event.waves,
             event.timeSpent,
-            new Date(event.timestamp), // Ensure it's a Date object
+            new Date(event.timestamp), 
         ]);
     });
 
-    // Center all cells from row 3 down
+    // Center all cells 
     worksheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
         if (rowNumber > 2) {
             row.eachCell((cell) => {

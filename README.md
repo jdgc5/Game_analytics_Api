@@ -1,55 +1,55 @@
 # Game Analytics API
 
-Este microservicio está diseñado para recibir datos de partidas de jugadores y almacenarlos en una base de datos MongoDB. 
-Además, permite exportar estos datos en formato Excel (para más info de los endpoints consulta `Endpoints Disponibles`) 
+This microservice is designed to receive player session data and store it in a MongoDB database.  
+It also allows exporting this data in Excel format (for more info, check `Available Endpoints`).
 
-## ¿Qué hace este servicio?
+## What does this service do?
 
-- Recibe datos de partidas: nivel, estrellas, intentos, tiempo, jugador, etc.
-- Guarda los datos en MongoDB.
-- Exporta los datos a Excel (`.xlsx`).
-- Está preparado para integrarse con cualquier frontend o juego móvil que use HTTP.
-- Puede ejecutarse de forma local o mediante Docker Compose (próximamente en nube mediante pulumi)
+- Receives session data: level, stars, waves, time, player, etc.
+- Stores the data in MongoDB.
+- Exports the data to Excel (`.xlsx`).
+- Ready to integrate with any frontend or mobile game using HTTP.
+- Can run locally or via Docker Compose (soon in the cloud using Pulumi).
 
-## Tecnologías utilizadas
+## Technologies used
 
 - Node.js + TypeScript
 - Express.js
 - MongoDB (Mongoose)
-- ExcelJS (para exportar a Excel)
-- Jest + ts-jest (para testing)
-- Pulumi (infraestructura como código) * Pending
+- ExcelJS (for Excel export)
+- Jest + ts-jest (for testing)
+- Pulumi (infrastructure as code) * Pending
 - Docker + Docker Compose
 
-## Instalación (local)
+## Installation (local)
 
-1. Clona el repositorio:
+1. Clone the repository:
 
 ```bash
-git clone https://tu-repo.git Game_analytics_Api
+git clone https://your-repo.git Game_analytics_Api
 cd Game_analytics_Api
 ```
 
-2. Instala las dependencias:
+2. Install dependencies:
 
 ```bash
 npm install
 ```
 
-3. Crea el archivo `.env` con este contenido:
+3. Create a `.env` file with the following content:
 
 ```
 MONGO_URI=mongodb://localhost:27017/gameanalytics
 PORT=3000
 ```
 
-4. Asegúrate de tener MongoDB corriendo. Puedes usar Docker:
+4. Make sure MongoDB is running. You can use Docker:
 
 ```bash
 docker run -d -p 27017:27017 --name mongo-dev mongo
 ```
 
-5. Inicia el servidor:
+5. Start the server:
 
 ```bash
 npm run dev
@@ -57,15 +57,15 @@ npm run dev
 
 ---
 
-## Instalación con Docker Compose
+## Installation with Docker Compose
 
-Levanta todo (API + MongoDB) con:
+Run everything (API + MongoDB) with:
 
 ```bash
 docker-compose up --build
 ```
 
-La API estará disponible en:  `http://localhost:3000`
+The API will be available at: `http://localhost:3000`
 
 ---
 
@@ -77,11 +77,11 @@ npm test
 
 ---
 
-## Endpoints disponibles
+## Available Endpoints
 
 ### POST `/events`
 
-Si quieres enviar un evento de partida, debes utilizar este formato raw Json como body:
+To send a game session event, use this raw JSON format in the body:
 
 ```json
 {
@@ -92,38 +92,44 @@ Si quieres enviar un evento de partida, debes utilizar este formato raw Json com
   "timeSpent": 75,
   "timestamp": "2025-04-02T16:50:00Z"
 }
-
 ```
 
-### GET  `/report`
+### GET `/events`
 
-Genera y descarga un archivo `report.xlsx` con todos los eventos en formato Excel.
+Returns all game events stored in the database.
 
-En Postman o aplicación similar, usa el botón **"Send and Download"** para guardar el archivo donde desees.
+### GET `/events/player/:playerId`
 
-### GET  `/report/playerId`
+Returns all events stored for the given `playerId`.
 
-Genera y descarga un archivo `report-${playerId}.xlsx` con todos los eventos
-en formato Excel.
+### GET `/report`
 
-En Postman o aplicación similar, usa el botón **"Send and Download"** para guardar el archivo donde desees.
+Generates and downloads a `report.xlsx` file with all events in Excel format.
+
+In Postman or a similar app, use the **"Send and Download"** button to save the file.
+
+### GET `/report/:playerId`
+
+Generates and downloads a `report-${playerId}.xlsx` file with all events for that player in Excel format.
+
+In Postman or a similar app, use the **"Send and Download"** button to save the file.
 
 ---
 
-## Estructura del proyecto
+## Project structure
 
 ```
 src/
-├── config/         ← Configuración de entorno y base de datos
-├── controllers/    ← Lógica de manejo de peticiones HTTP
-├── routes/         ← Definición de endpoints REST
-├── services/       ← Lógica de negocio (opcional, para escalar)
-├── models/         ← Esquemas de Mongoose (MongoDB)
-├── utils/          ← Funciones auxiliares como exportación a Excel
-├── app.ts          ← Configura Express y aplica rutas
-└── server.ts       ← Inicia conexión con Mongo y el servidor Express
+├── config/         ← Environment and DB configuration
+├── controllers/    ← HTTP request handlers
+├── routes/         ← REST endpoint definitions
+├── services/       ← Business logic (optional, for scalability)
+├── models/         ← Mongoose schemas (MongoDB)
+├── utils/          ← Helper functions such as Excel export
+├── app.ts          ← Sets up Express and routes
+└── server.ts       ← Connects to MongoDB and starts the Express server
 ```
 
 ---
 
-Autor - José David García Corzo
+Author - José David García Corzo
