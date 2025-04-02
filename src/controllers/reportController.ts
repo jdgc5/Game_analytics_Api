@@ -1,11 +1,11 @@
-import Event from '../models/GameSession';
-import { exportAttemptsToExcel } from '../utils/exporter';
+import Event from '../models/GameEvent';
+import { exportEventsToExcel } from '../utils/exporter';
 import { Request, Response } from 'express';
 
 
 export const generateReport = async (_req: Request, res: Response) => {
     const events = await Event.find().lean();
-    const buffer = await exportAttemptsToExcel(events);
+    const buffer = await exportEventsToExcel(events);
 
     res.setHeader('Content-Disposition', 'attachment; filename="report.xlsx"');
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -26,7 +26,7 @@ export const generateReportPlayer = async (req: Request, res: Response) => {
             return res.status(404).json({ message: "No data found for player" });
         }
 
-        const buffer = await exportAttemptsToExcel(sessions);
+        const buffer = await exportEventsToExcel(sessions);
 
         res.setHeader('Content-Disposition', `attachment; filename="report-${playerId}.xlsx"`);
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

@@ -87,14 +87,12 @@ Si quieres enviar un evento de partida, debes utilizar este formato raw Json com
 {
   "playerId": "abc123",
   "level": 5,
-  "attemptNumber":1,
-  "success":true,
-  "stars": 3,
-  "waves": 2,
-  "timeSpent": 45,
-  "timestamp": "2025-04-02T10:30:00Z",
-  "endedAt": "2025-04-02T10:30:45Z"
+  "stars": 2,
+  "waves": 3,
+  "timeSpent": 75,
+  "timestamp": "2025-04-02T16:50:00Z"
 }
+
 ```
 
 ### GET  `/report`

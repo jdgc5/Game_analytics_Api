@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Event from '../models/GameSession';
+import Event from '../models/GameEvent';
 
 export const createEvent = async (req: Request, res: Response) => {
   try {
