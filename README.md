@@ -26,7 +26,7 @@ It also allows exporting this data in Excel format (for more info, check `Availa
 1. Clone the repository:
 
 ```bash
-git clone https://your-repo.git Game_analytics_Api
+git clone https://github.com/jdgc5/Game_analytics_Api.git
 cd Game_analytics_Api
 ```
 
