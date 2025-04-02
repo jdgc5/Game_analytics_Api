@@ -1,32 +1,36 @@
 import { Workbook } from "exceljs";
-import { IEvent } from "../models/Event";
+import { IGameSession } from "../models/GameSession";
 
-
-export const exportEventsToExcel = async (events: IEvent[]) => {
+export const exportAttemptsToExcel = async (sessions: IGameSession[]) => {
     const workbook = new Workbook();
-    const worksheet = workbook.addWorksheet("Game Events");
+    const worksheet = workbook.addWorksheet("Game Attempts");
 
     worksheet.columns = [
         { header: "Player ID", key: "playerId", width: 20 },
         { header: "Level", key: "level", width: 10 },
+        { header: "Attempt #", key: "attemptNumber", width: 10 },
+        { header: "Success", key: "success", width: 10 },
         { header: "Stars", key: "stars", width: 10 },
-        { header: "Attempts", key: "attempts", width: 10 },
+        { header: "Waves", key: "waves", width: 15 },
         { header: "Time Spent (s)", key: "timeSpent", width: 15 },
-        { header: "Created At", key: "createdAt", width: 20 },
+        { header: "Timestamp", key: "timestamp", width: 20 },
     ];
 
-    events.forEach((event) => {
-        worksheet.addRow({
-            playerId: event.playerId,
-            level: event.level,
-            stars: event.stars,
-            attempts: event.attempts,
-            timeSpent: event.timeSpent,
-            createdAt: event.createdAt,
+    sessions.forEach((session) => {
+        session.attempts.forEach((attempt, index) => {
+            worksheet.addRow({
+                playerId: session.playerId,
+                level: session.level,
+                attemptNumber: index + 1,
+                success: attempt.success ? "Yes" : "No",
+                stars: attempt.stars ?? "-",
+                waves: attempt.waves,
+                timeSpent: attempt.timeSpent,
+                timestamp: attempt.timestamp,
+            });
         });
     });
 
     const buffer = await workbook.xlsx.writeBuffer();
     return buffer;
 };
-

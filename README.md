@@ -88,9 +88,12 @@ Envía un evento de partida:
 {
   "playerId": "abc123",
   "level": 5,
+  "attemptNumber":1,
+  "success":"Yes",
   "stars": 3,
-  "attempts": 2,
-  "timeSpent": 45
+  "waves": 2,
+  "timeSpent": 45,
+  "timestamp": "2025-04-02T10:30:00Z"
 }
 ```
 
