@@ -3,8 +3,8 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IFeedbackLevel extends Document {
     playerId: string;
     level: number;
-    satisfaction: 'low' | 'medium' | 'high';
-    difficulty: 'easy' | 'normal' | 'hard' | 'extreme';
+    satisfaction?: 'low' | 'medium' | 'high';
+    difficulty?: 'easy' | 'normal' | 'hard' | 'extreme';
     frustration?: 'none' | 'some' | 'high';
     comment: string;
     timestamp: Date;
