@@ -1,6 +1,16 @@
 import { Request, Response } from 'express';
 import Feedback from '../models/Feedback';
 
+/**
+ * Creates a new feedback entry in the database.
+ * 
+ * Body:
+ * - Expects the full feedback object in the request body (must match the schema).
+ * 
+ * Returns:
+ * - 201 Created: if feedback is saved successfully
+ * - 400 Bad Request: if validation fails or data is missing
+ */
 export const createFeedback = async (req: Request, res: Response) => {
     try {
         const feedback = new Feedback(req.body);
@@ -11,6 +21,13 @@ export const createFeedback = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Retrieves all feedback entries from the database.
+ * 
+ * Returns:
+ * - 200 OK: with an array of feedback objects sorted by timestamp (latest first)
+ * - 500 Internal Server Error: if the operation fails
+ */
 export const getAllFeedback = async (req: Request, res: Response) => {
     try {
         const feedbacks = await Feedback.find().sort({ timestamp: -1 });
@@ -20,6 +37,17 @@ export const getAllFeedback = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Retrieves all feedback entries submitted by a specific player.
+ * 
+ * Route param:
+ * - `playerId`: string — ID of the player
+ * 
+ * Returns:
+ * - 200 OK: with an array of feedbacks sorted by timestamp
+ * - 400 Bad Request: if `playerId` is missing
+ * - 500 Internal Server Error: if the operation fails
+ */
 export const getFeedbackByPlayer = async (req: Request, res: Response) => {
     const { playerId } = req.params;
 

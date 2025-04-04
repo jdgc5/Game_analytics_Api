@@ -102,7 +102,7 @@ To send a game session event, use this raw JSON format in the body:
 
 Returns all game events stored in the database.
 
-#### GET `/events/player/:playerId`
+#### GET `/events/:playerId`
 
 Returns all events stored for the given `playerId`.
 
@@ -141,7 +141,7 @@ To send a level feedback, use this raw JSON format in the body:
 
 Returns all game feedback stored in the database.
 
-#### GET `/feedback/player/:playerId`
+#### GET `/feedback/:playerId`
 
 Returns all game feedback stored for the given `playerId`.
 
@@ -160,25 +160,87 @@ To send a player progress , use this raw JSON format in the body:
 
 ```
 
-#### GET `/playerProgress/player/:playerId`
+#### GET `/playerProgress/:playerId`
 
 Returns player progress stored for the given `playerId`.
 
----
+### Level Controller
 
-## Project structure
+#### POST `/levels`
 
+Creates a new level by a user.
+
+```json
+{
+  "name": "Level 1",
+  "userId": "abc123",
+  "data": {
+    "levelName": "level 1",
+    "dimensions": {
+      "width": 10,
+      "height": 10
+    },
+    "startPosition": {
+      "x": 0,
+      "y": 0
+    },
+    "goalPosition": {
+      "x": 9,
+      "y": 9
+    },
+    "layout": [
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 1, 1, 1, 0, 0, 0, 1, 1, 0],
+      [0, 1, 0, 1, 0, 0, 0, 1, 0, 0],
+      [0, 1, 0, 1, 1, 1, 1, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+      [0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+      [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    "accelerators": [
+      {
+        "type": "booster",
+        "position": {
+          "x": 3,
+          "y": 3
+        },
+        "effect": {
+          "speedMultiplier": 1.5
+        }
+      },
+      {
+        "type": "slowZone",
+        "position": {
+          "x": 6,
+          "y": 6
+        },
+        "effect": {
+          "speedMultiplier": 0.5
+        }
+      }
+    ]
+  }
+}
 ```
-src/
-├── config/         ← Environment and DB configuration
-├── controllers/    ← HTTP request handlers
-├── routes/         ← REST endpoint definitions
-├── services/       ← Business logic (optional, for scalability)
-├── models/         ← Mongoose schemas (MongoDB)
-├── utils/          ← Helper functions such as Excel export
-├── app.ts          ← Sets up Express and routes
-└── server.ts       ← Connects to MongoDB and starts the Express server
-```
+
+#### GET `/levels/:id`
+
+Returns a single level by its ID.
+
+#### GET `/levels/user/:UserId`
+
+Returns all levels created by the given userId.
+
+#### PUT `/levels/:id`
+
+Updates the data of an existing level by its ID ( You should use the same JSON format as create endpoint above)
+
+#### DELETE `/levels/:id`
+
+Deletes the level with the given ID.
 
 ---
 

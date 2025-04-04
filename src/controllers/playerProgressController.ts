@@ -1,6 +1,25 @@
 import { Request, Response } from 'express';
 import PlayerProgress from '../models/PlayerProgress';
 
+/**
+ * Creates or updates a player's progress for a specific level.
+ * 
+ * Body:
+ * - `playerId`: string — ID of the player
+ * - `level`: number — level number being updated
+ * - `stars`: number — stars earned in that level
+ * 
+ * Process:
+ * - If no progress exists for the player, creates a new record with the level info.
+ * - If the level already exists and the new `stars` are higher, updates it.
+ * - If it's a new level for the player, adds it to the list.
+ * 
+ * Returns:
+ * - 201 Created: if a new progress record is created
+ * - 200 OK: if the existing progress is updated
+ * - 400 Bad Request: if any required field is missing
+ * - 500 Internal Server Error: if the operation fails
+ */
 export const setPlayerProgress = async (req: Request, res: Response) => {
     const { playerId, level, stars } = req.body;
 
@@ -39,6 +58,18 @@ export const setPlayerProgress = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Retrieves the full progress of a specific player.
+ * 
+ * Route param:
+ * - `playerId`: string — ID of the player
+ * 
+ * Returns:
+ * - 200 OK: the progress document for the player
+ * - 400 Bad Request: if `playerId` is missing
+ * - 404 Not Found: if no progress is found for the player
+ * - 500 Internal Server Error: if the operation fails
+ */
 export const getPlayerProgress = async (req: Request, res: Response) => {
     const { playerId } = req.params;
 

@@ -2,9 +2,14 @@ import { Request, Response } from 'express';
 import Event from '../models/GameEvent';
 
 /**
- * Creates a new game event.
- * Expects event data in the request body.
- * Returns the created event with status 201, or error with status 400.
+ * Creates a new game event entry in the database.
+ * 
+ * Body:
+ * - Expects the full event object in the request body (must match schema)
+ * 
+ * Returns:
+ * - 201 Created: if the event is saved successfully
+ * - 400 Bad Request: if the request body is missing or invalid
  */
 export const createEvent = async (req: Request, res: Response) => {
   try {
@@ -17,9 +22,15 @@ export const createEvent = async (req: Request, res: Response) => {
 };
 
 /**
- * Get all game events.
- * Retrieves and sorting all game events sorted by timestamp in descending order
- * Returns an array of events with status 200, or error with status 500.
+ * Retrieves all game events from the database.
+ * 
+ * Process:
+ * - Fetches all events
+ * - Sorts them by `timestamp` descending (newest first)
+ * 
+ * Returns:
+ * - 200 OK: with an array of all events
+ * - 500 Internal Server Error: if the operation fails
  */
 export const getAllEvents = async (req: Request, res: Response) => {
   try {
@@ -31,9 +42,19 @@ export const getAllEvents = async (req: Request, res: Response) => {
 };
 
 /**
- * Retrieves all events for a specific Player sorted by timestamp in descending order.
- * Expected playerId as a route parameter
- * Returns an array of events with status 200, or error with status 500.
+ * Retrieves all events for a specific player.
+ * 
+ * Route param:
+ * - `playerId`: string — ID of the player
+ * 
+ * Process:
+ * - Filters events by `playerId`
+ * - Sorts them by `timestamp` descending (newest first)
+ * 
+ * Returns:
+ * - 200 OK: with an array of player-specific events
+ * - 400 Bad Request: if `playerId` is missing
+ * - 500 Internal Server Error: if the operation fails
  */
 export const getEventsByPlayer = async (req: Request, res: Response) => {
   const { playerId } = req.params;
