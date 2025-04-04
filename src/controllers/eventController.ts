@@ -23,6 +23,10 @@ export const getAllEvents = async (req: Request, res: Response) => {
 export const getEventsByPlayer = async (req: Request, res: Response) => {
   const { playerId } = req.params;
 
+  if (!playerId) {
+    return res.status(400).json({ message: 'Missing playerId parameter' });
+  }
+
   try {
     const events = await Event.find({ playerId }).sort({ timestamp: -1 });
     res.status(200).json(events);

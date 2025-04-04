@@ -3,7 +3,7 @@ import { getPlayerProgress, setPlayerProgress} from '../controllers/playerProgre
 
 const router = express.Router();
 router.get('/:playerId', getPlayerProgress);
-router.post('/:playerId', setPlayerProgress);
+router.post('/', setPlayerProgress);
 
 
 export default router;
