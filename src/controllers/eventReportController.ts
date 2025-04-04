@@ -7,9 +7,9 @@ export const generateEventReport = async (_req: Request, res: Response) => {
     const events = await Event.find().lean();
     const buffer = await exportEventsToExcel(events);
 
-    res.setHeader('Content-Disposition', 'attachment; filename="report.xlsx"');
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.attachment('report.xlsx');
     res.send(buffer);
+    
 };
 
 export const generateEventReportPlayer = async (req: Request, res: Response) => {
@@ -28,9 +28,9 @@ export const generateEventReportPlayer = async (req: Request, res: Response) => 
 
         const buffer = await exportEventsToExcel(sessions);
 
-        res.setHeader('Content-Disposition', `attachment; filename="report-${playerId}.xlsx"`);
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.attachment(`report-${playerId}.xlsx`);
         res.send(buffer);
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error generating player report" });
