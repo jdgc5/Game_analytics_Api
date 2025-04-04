@@ -86,3 +86,41 @@ export const getPlayerProgress = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error getting player progress', error });
     }
 };
+
+/**
+ * Resets all progress for a specific player by clearing their levels.
+ * 
+ * Body:
+ * - playerId: string — ID of the player whose progress should be reset
+ * 
+ * Behavior:
+ * - If the player doesn't exist, creates a new empty record
+ * - If the player exists, clears all levels
+ * 
+ * Returns:
+ * - 200 OK: the updated (or created) progress document with no levels
+ * - 400 Bad Request: if `playerId` is missing
+ * - 500 Internal Server Error: if the operation fails
+ */
+export const resetPlayerProgress = async (req: Request, res: Response) => {
+    const { playerId } = req.body;
+
+    if (!playerId) {
+        return res.status(400).json({ message: 'Missing playerId, level or stars' });
+    }
+
+    try {
+        let player = await PlayerProgress.findOne({ playerId });
+
+        if (!player) {
+            player = new PlayerProgress({ playerId, levels: [] });
+        } else {
+            player.levels = [];
+        }
+        await player.save();
+        res.status(200).json({ success: true, message: 'Player progress reset successfully', player });
+    } catch (error) {
+        console.error('Error resetting player progress:', error);
+        res.status(500).json({ message: 'Error resetting player progress', error });
+    }
+};

@@ -179,6 +179,17 @@ To send a player progress , use this raw JSON format in the body:
 
 Returns player progress stored for the given `playerId`.
 
+#### POST `/playerProgress/reset`
+
+Resets all progress for a specific player by clearing their levels.
+
+```json
+{
+  "playerId": "abc123",
+}
+
+```
+
 ### Level Controller
 
 #### POST `/levels`
