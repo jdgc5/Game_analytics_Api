@@ -61,8 +61,11 @@ npm run dev
 Run everything (API + MongoDB) with:
 
 ```bash
-docker-compose up --build
+docker-compose build
 ```
+```bash
+docker-compose up -d 
+```    
 
 The API will be available at: `http://localhost:3000`
 
