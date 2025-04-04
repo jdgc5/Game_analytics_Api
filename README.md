@@ -1,10 +1,10 @@
 # Game Analytics API
 
-This API provides endpoints to manage game events, player feedback, and player progress. It allows for the collection and retrieval of game-related data to enhance player experience and game analysis. It also allows exporting this data in Excel format (for more info, check `Available Endpoints`).
+This API provides endpoints to manage game events, player feedback, player progress, and custom level creation. It allows for the collection and retrieval of game-related data to enhance player experience and game analysis. It also supports exporting this data in Excel format (for more info, check `Available Endpoints`).
 
 ## What does this service do?
 
-- Manage game events, feedback and player progress.
+- Manage game events, feedback, player progress, and user-created levels.
 - Stores the data in MongoDB.
 - Exports the data to Excel (`.xlsx`).
 - Ready to integrate with any frontend or mobile game using HTTP.
