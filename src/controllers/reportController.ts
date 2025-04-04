@@ -1,5 +1,5 @@
 import Event from '../models/GameEvent';
-import { exportEventsToExcel } from '../utils/exporter';
+import { exportEventsToExcel } from '../utils/exporterGameEvents';
 import { Request, Response } from 'express';
 
 

@@ -6,7 +6,7 @@ export const exportEventsToExcel = async (events: IGameEvent[]) => {
     const worksheet = workbook.addWorksheet("Game Events");
 
     // Main title 
-    worksheet.mergeCells("A1", "F1");
+    worksheet.mergeCells("A1", "I1");
     const titleCell = worksheet.getCell("A1");
     titleCell.value = "Player Session Report";
     titleCell.font = { size: 18, bold: true, color: { argb: "FFFFFFFF" } };
@@ -19,7 +19,7 @@ export const exportEventsToExcel = async (events: IGameEvent[]) => {
     worksheet.getRow(1).height = 50;
 
     // Column headers 
-    const headers = ["Player ID", "Level", "Stars", "Waves", "Time Spent (s)", "Timestamp"];
+    const headers = ["Player ID", "Level", "Stars", "Waves", "N.Attempt", "Speed", "Success" , "Time Spent (s)", "Timestamp"];
     worksheet.addRow(headers);
 
     const headerRow = worksheet.getRow(2);
@@ -44,7 +44,10 @@ export const exportEventsToExcel = async (events: IGameEvent[]) => {
         { key: "playerId", width: 25 },
         { key: "level", width: 10 },
         { key: "stars", width: 10 },
-        { key: "waves", width: 12 },
+        { key: "waves", width: 10 },
+        { key: "attempt", width: 10 },
+        { key: "speed", width: 10 },
+        { key: "success", width: 15 },
         { key: "timeSpent", width: 15 },
         {
             key: "timestamp",
@@ -60,6 +63,9 @@ export const exportEventsToExcel = async (events: IGameEvent[]) => {
             event.level,
             event.stars,
             event.waves,
+            event.attempt,
+            event.speed,
+            event.success ? "Yes" : "No",
             event.timeSpent,
             new Date(event.timestamp), 
         ]);

@@ -89,6 +89,9 @@ To send a game session event, use this raw JSON format in the body:
   "level": 5,
   "stars": 2,
   "waves": 3,
+  "attempt": 1,
+  "speed": 1.5,
+  "success": true,
   "timeSpent": 75,
   "timestamp": "2025-04-02T16:50:00Z"
 }
