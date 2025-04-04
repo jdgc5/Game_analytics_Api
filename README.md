@@ -58,8 +58,20 @@ npm run dev
 
 ## Installation with Docker Compose
 
-Run everything (API + MongoDB) with:
+1. Clone the repository:
 
+```bash
+git clone https://github.com/jdgc5/Game_analytics_Api.git
+cd Game_analytics_Api
+```
+2. Create a `.env` file with the following content:
+
+```
+MONGO_URI=mongodb://localhost:27017/gameanalytics
+PORT=3000
+```
+
+3. Start everything in detached mode (API + MongoDB):
 ```bash
 docker-compose build
 ```
