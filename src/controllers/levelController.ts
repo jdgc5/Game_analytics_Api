@@ -105,7 +105,7 @@ export const updateLevel = async (req: Request, res: Response) => {
     }
 
     try {
-        const level = await Level.findByIdAndUpdate(id, { data }, { new: true });
+        const level = await Level.findByIdAndUpdate(id, req.body, { new: true });
 
         if (!level) {
             return res.status(404).json({ message: 'Level not found' });

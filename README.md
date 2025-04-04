@@ -172,10 +172,9 @@ Creates a new level by a user.
 
 ```json
 {
-  "name": "Level 1",
+  "name": "CustomMap",
   "userId": "abc123",
   "data": {
-    "levelName": "level 1",
     "dimensions": {
       "width": 10,
       "height": 10
