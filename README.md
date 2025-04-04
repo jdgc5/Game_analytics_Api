@@ -117,6 +117,29 @@ Generates and downloads a `report-${playerId}.xlsx` file with all events for tha
 
 In Postman or a similar app, use the **"Send and Download"** button to save the file.
 
+### POST `/feedback`
+
+To send a level feedback, use this raw JSON format in the body:
+
+```json
+{
+  "playerId": "abc123",
+  "level": 1,
+  "satisfaction":"medium",
+  "difficulty":"easy",
+  "frustration":"none",
+  "comment":"This is an example comment, i would like to suggest some improvements for this level.....",
+  "timestamp": "2025-04-02T16:50:00Z"
+}
+```
+### GET `/feedback`
+
+Returns all game feedback stored in the database.
+
+### GET `/feedback/player/:playerId`
+
+Returns all game feedback stored for the given `playerId`.
+
 ---
 
 ## Project structure

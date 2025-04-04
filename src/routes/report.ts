@@ -1,9 +1,9 @@
 import express from 'express';
-import { generateReport, generateReportPlayer } from '../controllers/reportController';
+import { generateEventReport, generateEventReportPlayer } from '../controllers/eventReportController';
 
 const router = express.Router();
-router.get('/', generateReport);
-router.get('/:playerId', generateReportPlayer);
+router.get('/', generateEventReport);
+router.get('/:playerId', generateEventReportPlayer);
 
 export default router;
 

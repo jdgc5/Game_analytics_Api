@@ -3,7 +3,7 @@ import { exportEventsToExcel } from '../utils/exporterGameEvents';
 import { Request, Response } from 'express';
 
 
-export const generateReport = async (_req: Request, res: Response) => {
+export const generateEventReport = async (_req: Request, res: Response) => {
     const events = await Event.find().lean();
     const buffer = await exportEventsToExcel(events);
 
@@ -12,7 +12,7 @@ export const generateReport = async (_req: Request, res: Response) => {
     res.send(buffer);
 };
 
-export const generateReportPlayer = async (req: Request, res: Response) => {
+export const generateEventReportPlayer = async (req: Request, res: Response) => {
     const { playerId } = req.params;
 
     if (!playerId) {
