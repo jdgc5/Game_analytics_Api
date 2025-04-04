@@ -15,6 +15,6 @@ app.use('/events', eventRoutes);
 app.use('/report', reportRoutes)
 app.use('/feedback', feedbackRoutes)
 app.use('/playerProgress', playerProgressRoutes)
-app.use('/level', levelRoutes)
+app.use('/levels', levelRoutes)
 
 export default app;

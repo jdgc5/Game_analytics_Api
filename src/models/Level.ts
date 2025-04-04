@@ -1,4 +1,3 @@
-// models/Level.ts
 import mongoose from 'mongoose';
 
 const levelSchema = new mongoose.Schema({
