@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import Event from '../models/GameEvent';
 
+/**
+ * Creates a new game event.
+ * Expects event data in the request body.
+ * Returns the created event with status 201, or error with status 400.
+ */
 export const createEvent = async (req: Request, res: Response) => {
   try {
     const event = new Event(req.body);
@@ -11,6 +16,11 @@ export const createEvent = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * Get all game events.
+ * Retrieves and sorting all game events sorted by timestamp in descending order
+ * Returns an array of events with status 200, or error with status 500.
+ */
 export const getAllEvents = async (req: Request, res: Response) => {
   try {
     const events = await Event.find().sort({ timestamp: -1 });
@@ -20,6 +30,11 @@ export const getAllEvents = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * Retrieves all events for a specific Player sorted by timestamp in descending order.
+ * Expected playerId as a route parameter
+ * Returns an array of events with status 200, or error with status 500.
+ */
 export const getEventsByPlayer = async (req: Request, res: Response) => {
   const { playerId } = req.params;
 

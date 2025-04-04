@@ -1,11 +1,10 @@
 # Game Analytics API
 
-This microservice is designed to receive player session data and store it in a MongoDB database.  
-It also allows exporting this data in Excel format (for more info, check `Available Endpoints`).
+This API provides endpoints to manage game events, player feedback, and player progress. It allows for the collection and retrieval of game-related data to enhance player experience and game analysis. It also allows exporting this data in Excel format (for more info, check `Available Endpoints`).
 
 ## What does this service do?
 
-- Receives session data: level, stars, waves, time, player, etc.
+- Manage game events, feedback and player progress.
 - Stores the data in MongoDB.
 - Exports the data to Excel (`.xlsx`).
 - Ready to integrate with any frontend or mobile game using HTTP.
@@ -79,7 +78,9 @@ npm test
 
 ## Available Endpoints
 
-### POST `/events`
+### Game Events
+
+#### POST `/events`
 
 To send a game session event, use this raw JSON format in the body:
 
@@ -97,27 +98,31 @@ To send a game session event, use this raw JSON format in the body:
 }
 ```
 
-### GET `/events`
+#### GET `/events`
 
 Returns all game events stored in the database.
 
-### GET `/events/player/:playerId`
+#### GET `/events/player/:playerId`
 
 Returns all events stored for the given `playerId`.
 
-### GET `/report`
+### Reports
+
+#### GET `/report`
 
 Generates and downloads a `report.xlsx` file with all events in Excel format.
 
 In Postman or a similar app, use the **"Send and Download"** button to save the file.
 
-### GET `/report/:playerId`
+#### GET `/report/:playerId`
 
 Generates and downloads a `report-${playerId}.xlsx` file with all events for that player in Excel format.
 
 In Postman or a similar app, use the **"Send and Download"** button to save the file.
 
-### POST `/feedback`
+### Player Feedback
+
+#### POST `/feedback`
 
 To send a level feedback, use this raw JSON format in the body:
 
@@ -132,13 +137,32 @@ To send a level feedback, use this raw JSON format in the body:
   "timestamp": "2025-04-02T16:50:00Z"
 }
 ```
-### GET `/feedback`
+#### GET `/feedback`
 
 Returns all game feedback stored in the database.
 
-### GET `/feedback/player/:playerId`
+#### GET `/feedback/player/:playerId`
 
 Returns all game feedback stored for the given `playerId`.
+
+### Player Progress
+
+#### POST `/playerProgress`
+
+To send a player progress , use this raw JSON format in the body:
+
+```json
+{
+  "playerId": "abc123",
+  "level": 103,
+  "stars": 2
+}
+
+```
+
+#### GET `/playerProgress/player/:playerId`
+
+Returns player progress stored for the given `playerId`.
 
 ---
 
