@@ -35,7 +35,6 @@ export interface IWorld {
 }
 
 export interface IPlayerProgress extends Document {
-    playerId: string;
     totalStars: number;
     unlocks: Record<string, unknown>;
     worldsList: IWorld[];
@@ -76,7 +75,7 @@ const WorldSchema = new Schema<IWorld>({
 }, { _id: false });
 
 const PlayerProgressSchema = new Schema<IPlayerProgress>({
-    playerId: { type: String, required: true, unique: true },
+    _id: {type: String},
     totalStars: { type: Number, required: true },
     unlocks: { type: Schema.Types.Mixed, required: true },
     worldsList: { type: [WorldSchema], required: true }
