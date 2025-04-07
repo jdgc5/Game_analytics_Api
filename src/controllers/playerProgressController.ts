@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import PlayerProgress from '../models/PlayerProgress';
+import PlayerProgress, { IPlayerProgress, IWorld, ILevelList } from '../models/PlayerProgress';
+import { createEmptyPlayerProgress, resetExistingPlayerProgress ,mergeWorlds } from '../services/playerProgress.service';
 
 /**
  * Creates or updates a player's progress for a specific level.
@@ -21,39 +22,23 @@ import PlayerProgress from '../models/PlayerProgress';
  * - 500 Internal Server Error: if the operation fails
  */
 export const setPlayerProgress = async (req: Request, res: Response) => {
-    const { playerId, level, stars } = req.body;
-
-    if (!playerId || level === undefined || stars === undefined) {
-        return res.status(400).json({ message: 'Missing playerId, level or stars' });
-    }
+    const { playerId, totalStars, unlocks, worldsList } = req.body;
 
     try {
-        const progress = await PlayerProgress.findOne({ playerId });
-        const newTimestamp = new Date();
+        let playerProgress: IPlayerProgress | null = await PlayerProgress.findOne({ playerId });
 
-        if (!progress) {
-
-            const newProgress = new PlayerProgress({
-                playerId,
-                levels: [{ level, stars, timestamp: newTimestamp }]
-            });
-            await newProgress.save();
-            return res.status(201).json(newProgress);
-        }
-
-        const levelEntry = progress.levels.find(l => l.level === level);
-
-        if (levelEntry) {
-            if (stars > levelEntry.stars) {
-                levelEntry.stars = stars;
-                levelEntry.timestamp = newTimestamp;
-            }
+        if (!playerProgress) {
+            playerProgress = new PlayerProgress({ playerId, totalStars, unlocks, worldsList});
         } else {
-            progress.levels.push({ level, stars, timestamp: newTimestamp });
+            playerProgress.totalStars = totalStars;
+            playerProgress.unlocks = unlocks;
+            mergeWorlds(playerProgress.worldsList, worldsList);
         }
-        await progress.save();
-        res.status(200).json(progress);
+
+        await playerProgress.save();
+        res.status(200).json({ success: true, message: 'Player progress updated successfully', playerProgress });
     } catch (error) {
+        console.error('Error updating player progress:', error);
         res.status(500).json({ message: 'Error updating player progress', error });
     }
 };
@@ -73,9 +58,6 @@ export const setPlayerProgress = async (req: Request, res: Response) => {
 export const getPlayerProgress = async (req: Request, res: Response) => {
     const { playerId } = req.params;
 
-    if (!playerId) {
-        return res.status(400).json({ message: 'Missing playerId parameter' });
-    }
     try {
         const progress = await PlayerProgress.findOne({ playerId });
         if (!progress) {
@@ -105,18 +87,9 @@ export const getPlayerProgress = async (req: Request, res: Response) => {
 export const resetPlayerProgress = async (req: Request, res: Response) => {
     const { playerId } = req.body;
 
-    if (!playerId) {
-        return res.status(400).json({ message: 'Missing playerId, level or stars' });
-    }
-
     try {
         let player = await PlayerProgress.findOne({ playerId });
-
-        if (!player) {
-            player = new PlayerProgress({ playerId, levels: [] });
-        } else {
-            player.levels = [];
-        }
+        player = !player ? await createEmptyPlayerProgress(playerId) : await resetExistingPlayerProgress(playerId);
         await player.save();
         res.status(200).json({ success: true, message: 'Player progress reset successfully', player });
     } catch (error) {
