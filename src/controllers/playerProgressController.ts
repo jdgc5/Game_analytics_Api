@@ -1,6 +1,35 @@
 import { Request, Response } from 'express';
 import PlayerProgress from '../models/PlayerProgress';
-import { createEmptyPlayerProgress, resetExistingPlayerProgress ,mergeWorlds } from '../services/playerProgress.service';
+import { createEmptyPlayerProgress, resetExistingPlayerProgress } from '../services/playerProgress.service';
+
+/**
+ * Create a new player ID.
+ *  
+ * Behavior:
+ * - Generates a new player document with the provided playerId.
+ * - Initializes the progress with:
+ *   - totalStars = 0
+ *   - unlocks = {}
+ *   - worldsList = []
+ * - Saves the player to the database.
+ * 
+ * Returns:
+ * - 201 OK: Player has been created sucesfully
+ * - 500 Internal Server Error: Error Creating Player
+ */
+
+export const createPlayer = async (req: Request, res: Response) => {
+    const playerId = "12315552";
+
+    try {
+        const player = await createEmptyPlayerProgress(playerId)
+        await player.save();
+        res.status(201).json({ success: true, message: 'Player created successfully', playerId, player });
+    } catch (error) {
+        console.error('Error creating player:', error);
+        res.status(500).json({ message: 'Error creating player', error });
+    }
+};
 
 /**
  * Updates a player's progress document.
@@ -22,21 +51,8 @@ import { createEmptyPlayerProgress, resetExistingPlayerProgress ,mergeWorlds } f
  * - 500 Internal Server Error: if an error occurs during processing
  */
 
-export const createPlayer = async (req: Request, res: Response) => {
-    const playerId = "12315552";
-
-    try {
-        const player = await createEmptyPlayerProgress(playerId)
-        await player.save();
-        res.status(201).json({ success: true, message: 'Player created successfully', playerId, player });
-    } catch (error) {
-        console.error('Error creating player:', error);
-        res.status(500).json({ message: 'Error creating player', error });
-    }
-};
-
 export const setPlayerProgress = async (req: Request, res: Response) => {
-    const { playerId} = req.params
+    const { playerId } = req.params
     const { totalStars, unlocks, worldsList } = req.body;
 
     try {
@@ -47,7 +63,7 @@ export const setPlayerProgress = async (req: Request, res: Response) => {
         } else {
             playerProgress.totalStars = totalStars;
             playerProgress.unlocks = unlocks;
-            mergeWorlds(playerProgress.worldsList, worldsList);
+            playerProgress.worldsList = worldsList;
         }
 
         await playerProgress.save();
@@ -102,11 +118,11 @@ export const resetPlayerProgress = async (req: Request, res: Response) => {
     const { playerId } = req.params;
 
     try {
-        let player = await PlayerProgress.findOne({ playerId });
+        let player = await PlayerProgress.findOne({ _id:playerId });
         player = !player 
         ? await createEmptyPlayerProgress(playerId) 
         : await resetExistingPlayerProgress(player);
-        await player.save();
+
         res.status(200).json({ success: true, message: 'Player progress reset successfully', player });
     } catch (error) {
         console.error('Error resetting player progress:', error);
