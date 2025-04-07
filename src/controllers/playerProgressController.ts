@@ -5,6 +5,9 @@ import { createEmptyPlayerProgress, resetExistingPlayerProgress } from '../servi
 /**
  * Create a new player ID.
  *  
+ * Route param:
+ * - `playerId`: string — ID of the player
+ * 
  * Behavior:
  * - Generates a new player document with the provided playerId.
  * - Initializes the progress with:
@@ -19,7 +22,7 @@ import { createEmptyPlayerProgress, resetExistingPlayerProgress } from '../servi
  */
 
 export const createPlayer = async (req: Request, res: Response) => {
-    const playerId = "12315552";
+    const {playerId} = req.params;
 
     try {
         const player = await createEmptyPlayerProgress(playerId)

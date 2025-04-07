@@ -162,15 +162,87 @@ Returns all game feedback stored for the given `playerId`.
 
 ### Player Progress
 
-#### POST `/playerProgress`
+#### CREATE `/playerProgress/createPlayer/:playerId`
+
+Creates a new player with the specified `playerId`.
+
+#### PATCH `/playerProgress/:playerId`
 
 To send a player progress , use this raw JSON format in the body:
 
 ```json
 {
-  "playerId": "abc123",
-  "level": 103,
-  "stars": 2
+    "totalStars": 0,
+    "unlocks": {},
+    "worldsList": [
+        {
+            "worldName": "Intro",
+            "levels": {
+                "unlockedStars": 0,
+                "levelList": [
+                    {
+                        "levelName": "1",
+                        "level": {
+                            "stars": {
+                                "completed": true,
+                                "inTime": true,
+                                "inWaves": true,
+                                "inAll": true
+                            },
+                            "performance": {
+                                "attempts": 10,
+                                "totalTime": 48.425132751464847,
+                                "bestWaves": 1,
+                                "bestTime": 1.6805944442749024
+                            }
+                        }
+                    },
+                    {
+                        "levelName": "2",
+                        "level": {
+                            "stars": {
+                                "completed": false,
+                                "inTime": false,
+                                "inWaves": false,
+                                "inAll": false
+                            },
+                            "performance": {
+                                "attempts": 14,
+                                "totalTime": 0.0,
+                                "bestWaves": 99,
+                                "bestTime": 99.0
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "worldName": "MetaLevel",
+            "levels": {
+                "unlockedStars": 0,
+                "levelList": [
+                    {
+                        "levelName": "0",
+                        "level": {
+                            "stars": {
+                                "completed": true,
+                                "inTime": false,
+                                "inWaves": true,
+                                "inAll": false
+                            },
+                            "performance": {
+                                "attempts": 31,
+                                "totalTime": 33.515567779541019,
+                                "bestWaves": 1,
+                                "bestTime": 15.484548568725586
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
 }
 
 ```
@@ -179,7 +251,7 @@ To send a player progress , use this raw JSON format in the body:
 
 Returns player progress stored for the given `playerId`.
 
-#### POST `/playerProgress/reset`
+#### POST `/playerProgress/:playerId/resetProgress`
 
 Resets all progress for a specific player by clearing their levels.
 
