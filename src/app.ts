@@ -4,7 +4,7 @@ import eventRoutes from './routes/events';
 import reportRoutes from './routes/report';
 import feedbackRoutes from './routes/feedback';
 import playerProgressRoutes from './routes/playerProgress';
-import levelRoutes from './routes/level';
+import levelRoutes from './routes/levels';
 
 dotenv.config();
 

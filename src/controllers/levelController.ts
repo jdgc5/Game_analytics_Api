@@ -4,25 +4,16 @@ import Level from '../models/Level';
 /**
  * Saves a new level in the database for a specific user.
  * 
- * Expects:
- * - `name`: string — name of the level
- * - `data`: any — level configuration/details
- * - `userId`: string — ID of the user who owns the level
- * 
  * Returns:
  * - 201 Created: if the level is saved successfully
  * - 400 Bad Request: if any required field is missing
  * - 500 Internal Server Error: if the operation fails
  */
-export const saveLevel = async (req: Request, res: Response) => {
-    const { name, data, userId } = req.body;
-
-    if (!name || !data || !userId) {
-        return res.status(400).json({ message: 'Missing level name, data or userId' });
-    }
+export const createLevel = async (req: Request, res: Response) => {
+    const { userId,name,world,levelId,starsTarget,timeTarget,obstacleList } = req.body;
 
     try {
-        const level = new Level({ name, data, userId });
+        const level = new Level({ userId,name,world,levelId,starsTarget,timeTarget,obstacleList });
         await level.save();
 
         res.status(201).json({ success: true, message: 'Level saved successfully', level });
@@ -44,10 +35,10 @@ export const saveLevel = async (req: Request, res: Response) => {
  * - 500 Internal Server Error: if the operation fails
  */
 export const getLevel = async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { levelId } = req.params;
 
     try {
-        const level = await Level.findById(id);
+        const level = await Level.findById(levelId);
 
         if (!level) {
             return res.status(404).json({ message: 'Level not found' });

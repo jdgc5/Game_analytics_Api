@@ -270,56 +270,140 @@ Creates a new level by a user.
 
 ```json
 {
-  "name": "CustomMap",
-  "userId": "abc123",
-  "data": {
-    "dimensions": {
-      "width": 10,
-      "height": 10
-    },
-    "startPosition": {
-      "x": 0,
-      "y": 0
-    },
-    "goalPosition": {
-      "x": 9,
-      "y": 9
-    },
-    "layout": [
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 1, 1, 1, 0, 0, 0, 1, 1, 0],
-      [0, 1, 0, 1, 0, 0, 0, 1, 0, 0],
-      [0, 1, 0, 1, 1, 1, 1, 1, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-      [0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-      [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    "name": "example",
+    "userId":"pruebaUserId",
+    "world": "prueba",
+    "levelId": 112234,
+    "starsTarget": 0,
+    "timeTarget": 0,
+    "obstacleList": [
+        {
+            "type": 0,
+            "points": [
+                {
+                    "x": 4.0,
+                    "y": 2.5
+                },
+                {
+                    "x": -7.0,
+                    "y": 8.0
+                },
+                {
+                    "x": 14.0,
+                    "y": 8.0
+                },
+                {
+                    "x": 14.0,
+                    "y": 0.0
+                },
+                {
+                    "x": 5.0,
+                    "y": 0.0
+                }
+            ],
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        {
+            "type": 0,
+            "points": [
+                {
+                    "x": -7.0,
+                    "y": 2.0
+                },
+                {
+                    "x": 3.5,
+                    "y": 0.5
+                },
+                {
+                    "x": 3.5,
+                    "y": -0.5
+                },
+                {
+                    "x": -7.0,
+                    "y": -2.0
+                }
+            ],
+            "position": {
+                "x": -3.0,
+                "y": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
     ],
-    "accelerators": [
-      {
-        "type": "booster",
-        "position": {
-          "x": 3,
-          "y": 3
-        },
-        "effect": {
-          "speedMultiplier": 1.5
+    "ballList": [
+        {
+            "type": 0,
+            "position": {
+                "x": -5.28000020980835,
+                "y": 2.740000009536743
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "rotation": 0.0,
+            "initialVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            }
         }
-      },
-      {
-        "type": "slowZone",
-        "position": {
-          "x": 6,
-          "y": 6
-        },
-        "effect": {
-          "speedMultiplier": 0.5
+    ],
+    "exitList": [
+        {
+            "type": 0,
+            "position": {
+                "x": -5.0,
+                "y": -2.700000047683716
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "rotation": 0.0
         }
-      }
+    ],
+    "flowList": [
+        {
+            "type": 0,
+            "position": {
+                "x": 2.9000000953674318,
+                "y": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "rotation": 90.0,
+            "strength": 1.0
+        }
+    ],
+    "blockList": [
+        {
+            "size": {
+                "x": 20.0,
+                "y": 4.0
+            },
+            "position": {
+                "x": 0.2385958433151245,
+                "y": -2.233276844024658
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "rotation": 0.0
+        }
     ]
-  }
 }
 ```
 
