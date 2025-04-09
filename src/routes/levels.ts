@@ -4,10 +4,10 @@ import { createLevel, getLevel, getAllLevels, updateLevel, deleteLevel } from '.
 
 const router = express.Router();
 router.post('/', validateBodyFields(['name', 'world', 'levelId', 'starsTarget', 'timeTarget', 'obstacleList']),createLevel);
-router.get('/:id', validateBodyFields(["levelId"]) ,getLevel);
+router.get('/:levelId', validateBodyFields(["levelId"]) ,getLevel);
 router.get('/user/:userId', getAllLevels);
 router.put('/:id', validateBodyFields(['name', 'world', 'levelId', 'starsTarget', 'timeTarget', 'obstacleList']) , updateLevel);
-router.delete('/:id', deleteLevel);
+router.delete('/:levelId', deleteLevel);
 
 export default router;
 

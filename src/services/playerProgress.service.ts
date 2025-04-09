@@ -1,4 +1,3 @@
-import { IWorld } from '../models/PlayerProgress';
 import PlayerProgress, { IPlayerProgress } from '../models/PlayerProgress';
 import { HydratedDocument } from 'mongoose';
 

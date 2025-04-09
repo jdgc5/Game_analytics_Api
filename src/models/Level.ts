@@ -15,6 +15,8 @@ const levelSchema = new Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
+levelSchema.index({ userId: 1, levelId: 1 }, { unique: true });
+
 levelSchema.set('toJSON', {
     transform: (_, ret) => {
         ret.id = ret._id;

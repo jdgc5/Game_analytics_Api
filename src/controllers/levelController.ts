@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Level from '../models/Level';
+import { checkLevelExists } from '../services/levelProgress.service';
 
 /**
  * Saves a new level in the database for a specific user.
@@ -13,6 +14,11 @@ export const createLevel = async (req: Request, res: Response) => {
     const { userId,name,world,levelId,starsTarget,timeTarget,obstacleList } = req.body;
 
     try {
+
+        const alreadyExists = await checkLevelExists(userId, levelId);
+        if (alreadyExists) {
+            return res.status(409).json({ message: 'Level already exists for this user' });
+        }
         const level = new Level({ userId,name,world,levelId,starsTarget,timeTarget,obstacleList });
         await level.save();
 
@@ -24,10 +30,7 @@ export const createLevel = async (req: Request, res: Response) => {
 };
 
 /**
- * Retrieves a specific level by its ID (provided by Mongo).
- * 
- * Route param:
- * - `id`: string — ID of the level
+ * Retrieves a specific level by its ID.
  * 
  * Returns:
  * - 200 OK: the level if found
@@ -35,15 +38,10 @@ export const createLevel = async (req: Request, res: Response) => {
  * - 500 Internal Server Error: if the operation fails
  */
 export const getLevel = async (req: Request, res: Response) => {
-    const { levelId } = req.params;
+    const { userId,levelId } = req.params;
 
     try {
-        const level = await Level.findById(levelId);
-
-        if (!level) {
-            return res.status(404).json({ message: 'Level not found' });
-        }
-
+        const level = await Level.findOne({ userId, levelId });
         res.status(200).json(level);
     } catch (error) {
         console.error('Error retrieving level:', error);
@@ -53,9 +51,6 @@ export const getLevel = async (req: Request, res: Response) => {
 
 /**
  * Retrieves all levels created by a specific user.
- * 
- * Route param:
- * - `userId`: string — ID of the user
  * 
  * Returns:
  * - 200 OK: list of levels sorted by newest first
