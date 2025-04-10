@@ -110,13 +110,28 @@ export const updateLevel = async (req: Request, res: Response) => {
  * - 500 Internal Server Error: if the operation fails
  */
 export const deleteLevel = async (req: Request, res: Response) => {
-    const { userId,levelId } = req.params;
+    const { userId, levelId } = req.params;
 
     try {
-        const deleted = await Level.findOne({ userId, levelId });
-        
+        const deleted = await Level.findOneAndDelete({ userId, levelId: Number(levelId) });
+
         if (!deleted) {
             return res.status(404).json({ message: 'Level not found' });
+        }
+
+        res.status(200).json({ success: true, message: 'Level deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting level', error });
+    }
+};
+
+export const deleteAllLevelByUser = async (req: Request, res: Response) => {
+    const { userId } = req.params;
+
+    try {
+        const user = await Level.deleteMany({ userId });
+        if (!user) {
+            return res.status(404).json({ message: 'player not found' });
         }
         res.status(200).json({ success: true, message: 'Level deleted successfully' });
     } catch (error) {
