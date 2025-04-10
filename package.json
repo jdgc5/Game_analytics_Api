@@ -6,7 +6,8 @@
     "dev": "ts-node-dev --respawn src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "jest"
+    "test": "jest",
+    "seed": "ts-node scripts/seed.ts"
   },
   "dependencies": {
     "dotenv": "^16.3.1",

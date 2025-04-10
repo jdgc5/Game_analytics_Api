@@ -41,14 +41,19 @@ npm install
 MONGO_URI=mongodb://localhost:27017/gameanalytics
 PORT=3000
 ```
+4. (optional) Fill MongoDb with some levels.
 
-4. Make sure MongoDB is running. You can use Docker:
+```bash
+npm run seed
+```
+
+5. Make sure MongoDB is running. You can use Docker:
 
 ```bash
 docker run -d -p 27017:27017 --name mongo-dev mongo
 ```
 
-5. Start the server:
+6. Start the server:
 
 ```bash
 npm run dev
@@ -273,7 +278,7 @@ Creates a new level by a user.
     "name": "example",
     "userId":"pruebaUserId",
     "world": "prueba",
-    "levelId": 112234,
+    "levelId": 1,
     "starsTarget": 0,
     "timeTarget": 0,
     "obstacleList": [
