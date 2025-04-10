@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "test": "jest",
-    "seed": "ts-node scripts/seed.ts"
+    "seed": "ts-node src/scripts/seed.ts"
   },
   "dependencies": {
     "dotenv": "^16.3.1",

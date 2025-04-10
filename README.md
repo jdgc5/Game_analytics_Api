@@ -83,6 +83,11 @@ docker-compose build
 ```bash
 docker-compose up -d 
 ```    
+4. (optional) Fill MongoDb with some levels.
+
+```bash
+npm run seed
+```
 
 The API will be available at: `http://localhost:3000`
 

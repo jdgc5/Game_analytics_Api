@@ -92,7 +92,7 @@ export const getPlayerProgress = async (req: Request, res: Response) => {
     const { playerId } = req.params;
 
     try {
-        const progress = await PlayerProgress.findById(playerId);
+        const progress = await PlayerProgress.findById(playerId).sort({ timestamp: -1 });
         if (!progress) {
             return res.status(404).json({ message: 'Player progress not found' });
         }
