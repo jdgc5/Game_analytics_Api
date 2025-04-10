@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
 
 const levelSchema = new Schema({
-    userId: { type: String, required: true }, 
     name: { type: String, required: true },
+    userId: { type: String, required: true }, 
     world: { type: String, required: true },
     levelId: { type: Number, required: true },
     starsTarget: { type: Number, required: true },
@@ -14,8 +14,6 @@ const levelSchema = new Schema({
     blockList: { type: [Schema.Types.Mixed], required: false },
     createdAt: { type: Date, default: Date.now }
 });
-
-levelSchema.index({ userId: 1, levelId: 1 }, { unique: true });
 
 levelSchema.set('toJSON', {
     transform: (_, ret) => {

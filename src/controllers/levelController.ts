@@ -11,15 +11,14 @@ import { checkLevelExists } from '../services/levelProgress.service';
  * - 500 Internal Server Error: if the operation fails
  */
 export const createLevel = async (req: Request, res: Response) => {
-    const { userId,name,world,levelId,starsTarget,timeTarget,obstacleList } = req.body;
+    const { name,userId,world,levelId,starsTarget,timeTarget,obstacleList } = req.body;
 
     try {
-
         const alreadyExists = await checkLevelExists(userId, levelId);
         if (alreadyExists) {
             return res.status(409).json({ message: 'Level already exists for this user' });
         }
-        const level = new Level({ userId,name,world,levelId,starsTarget,timeTarget,obstacleList });
+        const level = new Level({ name,userId,world,levelId,starsTarget,timeTarget,obstacleList });
         await level.save();
 
         res.status(201).json({ success: true, message: 'Level saved successfully', level });
@@ -30,7 +29,7 @@ export const createLevel = async (req: Request, res: Response) => {
 };
 
 /**
- * Retrieves a specific level by its ID.
+ * Retrieves a specific level by userId and levelId.
  * 
  * Returns:
  * - 200 OK: the level if found
@@ -42,6 +41,9 @@ export const getLevel = async (req: Request, res: Response) => {
 
     try {
         const level = await Level.findOne({ userId, levelId });
+        if (!level) {
+            return res.status(404).json({ message: 'Level not found for this user' });
+        }
         res.status(200).json(level);
     } catch (error) {
         console.error('Error retrieving level:', error);
@@ -70,11 +72,6 @@ export const getAllLevels = async (req: Request, res: Response) => {
 
 /**
  * Updates the `data` of a level by its ID.
- * 
- * Route param:
- * - `id`: string — ID of the level
- * Body:
- * - `data`: any — updated level content
  * 
  * Returns:
  * - 200 OK: if updated successfully
@@ -105,10 +102,7 @@ export const updateLevel = async (req: Request, res: Response) => {
 };
 
 /**
- * Deletes a level by its ID.
- * 
- * Route param:
- * - `id`: string — ID of the level
+ * Deletes a level by its userID and levelId.
  * 
  * Returns:
  * - 200 OK: if the level was deleted successfully
@@ -116,18 +110,16 @@ export const updateLevel = async (req: Request, res: Response) => {
  * - 500 Internal Server Error: if the operation fails
  */
 export const deleteLevel = async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { userId,levelId } = req.params;
 
     try {
-        const deleted = await Level.findByIdAndDelete(id);
-
+        const deleted = await Level.findOne({ userId, levelId });
+        
         if (!deleted) {
             return res.status(404).json({ message: 'Level not found' });
         }
-
         res.status(200).json({ success: true, message: 'Level deleted successfully' });
     } catch (error) {
-        console.error('Error deleting level:', error);
         res.status(500).json({ message: 'Error deleting level', error });
     }
 };
