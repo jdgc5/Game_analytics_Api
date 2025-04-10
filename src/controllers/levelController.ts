@@ -80,15 +80,13 @@ export const getAllLevels = async (req: Request, res: Response) => {
  * - 500 Internal Server Error: if the operation fails
  */
 export const updateLevel = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { data } = req.body;
-
-    if (!data) {
-        return res.status(400).json({ message: 'Missing level data' });
-    }
+    const { userId, levelId } = req.params;
+    const { name, world, starsTarget, timeTarget, obstacleList, ballList, exitList, flowList, blockList } = req.body;
 
     try {
-        const level = await Level.findByIdAndUpdate(id, req.body, { new: true });
+        const level = await Level.findOneAndUpdate( { userId, levelId: Number(levelId) },
+            { name, world, starsTarget, timeTarget, obstacleList, ballList, exitList, flowList, blockList}, { new: true }
+        );
 
         if (!level) {
             return res.status(404).json({ message: 'Level not found' });

@@ -407,21 +407,170 @@ Creates a new level by a user.
 }
 ```
 
-#### GET `/levels/:id`
+#### GET `/levels/user/:userId`
 
-Returns a single level by its ID.
+Returns all levels created by a specific user.
 
-#### GET `/levels/user/:UserId`
+---
 
-Returns all levels created by the given userId.
+#### GET `/levels/user/:userId/level/:levelId`
 
-#### PUT `/levels/:id`
+Returns a specific level by userId and levelId.
 
-Updates the data of an existing level by its ID ( You should use the same JSON format as create endpoint above)
+---
 
-#### DELETE `/levels/:id`
+#### PUT `/levels/user/:userId/level/:levelId`
 
-Deletes the level with the given ID.
+Updates a level's data.
+
+```json
+{
+    "name": "exampleUpdated",
+    "world": "prueba",
+    "starsTarget": 0,
+    "timeTarget": 0,
+    "obstacleList": [
+        {
+            "type": 0,
+            "points": [
+                {
+                    "x": 4.0,
+                    "y": 2.5
+                },
+                {
+                    "x": -7.0,
+                    "y": 8.0
+                },
+                {
+                    "x": 14.0,
+                    "y": 8.0
+                },
+                {
+                    "x": 14.0,
+                    "y": 0.0
+                },
+                {
+                    "x": 5.0,
+                    "y": 0.0
+                }
+            ],
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        {
+            "type": 0,
+            "points": [
+                {
+                    "x": -7.0,
+                    "y": 2.0
+                },
+                {
+                    "x": 3.5,
+                    "y": 0.5
+                },
+                {
+                    "x": 3.5,
+                    "y": -0.5
+                },
+                {
+                    "x": -7.0,
+                    "y": -2.0
+                }
+            ],
+            "position": {
+                "x": -3.0,
+                "y": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+    ],
+    "ballList": [
+        {
+            "type": 0,
+            "position": {
+                "x": -5.28000020980835,
+                "y": 2.740000009536743
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "rotation": 0.0,
+            "initialVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    ],
+    "exitList": [
+        {
+            "type": 0,
+            "position": {
+                "x": -5.0,
+                "y": -2.700000047683716
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "rotation": 0.0
+        }
+    ],
+    "flowList": [
+        {
+            "type": 0,
+            "position": {
+                "x": 2.9000000953674318,
+                "y": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "rotation": 90.0,
+            "strength": 1.0
+        }
+    ],
+    "blockList": [
+        {
+            "size": {
+                "x": 20.0,
+                "y": 4.0
+            },
+            "position": {
+                "x": 0.2385958433151245,
+                "y": -2.233276844024658
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "rotation": 0.0
+        }
+    ]
+}
+```
+
+---
+
+#### DELETE `/levels/user/:userId/level/:levelId`
+
+Deletes a specific level for a user.
+
+---
+
+#### DELETE `/levels/user/:userId`
+
+Deletes **all levels** for a user.
 
 ---
 

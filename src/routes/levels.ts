@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/', validateBodyFields(['name', 'userId', 'world', 'levelId', 'starsTarget', 'timeTarget', 'obstacleList']),createLevel);
 router.get('/user/:userId/level/:levelId', validateUserIdAndLevelIdParams , getLevel);
 router.get('/user/:userId', validatePlayerIdParam,getAllLevels);
-router.put('/:id', validateBodyFields(['name', 'userId','world', 'levelId', 'starsTarget', 'timeTarget', 'obstacleList']) , updateLevel);
+router.put('/user/:userId/level/:levelId', validateUserIdAndLevelIdParams, validateBodyFields(['name','world', 'starsTarget', 'timeTarget', 'obstacleList']) , updateLevel);
 router.delete('/user/:userId/level/:levelId', validateUserIdAndLevelIdParams, deleteLevel);
 router.delete('/user/:userId', validatePlayerIdParam,deleteAllLevelByUser);
 
