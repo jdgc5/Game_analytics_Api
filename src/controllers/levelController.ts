@@ -71,7 +71,7 @@ export const getAllLevels = async (req: Request, res: Response) => {
 };
 
 /**
- * Updates the `data` of a level by its ID.
+ * Updates the `data` of a level by its userId and levelId.
  * 
  * Returns:
  * - 200 OK: if updated successfully
@@ -131,10 +131,10 @@ export const deleteAllLevelByUser = async (req: Request, res: Response) => {
     try {
         const user = await Level.deleteMany({ userId });
         if (!user) {
-            return res.status(404).json({ message: 'player not found' });
+            return res.status(404).json({ message: 'userId not found' });
         }
-        res.status(200).json({ success: true, message: 'Level deleted successfully' });
+        res.status(200).json({ success: true, message: `${userId} Levels has been deleted successfully` });
     } catch (error) {
-        res.status(500).json({ message: 'Error deleting level', error });
+        res.status(500).json({ message: 'Error deleting levels', error });
     }
 };
