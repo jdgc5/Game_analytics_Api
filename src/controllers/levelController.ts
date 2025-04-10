@@ -40,7 +40,7 @@ export const getLevel = async (req: Request, res: Response) => {
     const { userId,levelId } = req.params;
 
     try {
-        const level = await Level.findOne({ userId, levelId });
+        const level = await Level.findOne({ userId, levelId }).sort({levelId: 1});
         if (!level) {
             return res.status(404).json({ message: 'Level not found for this user' });
         }
@@ -62,7 +62,7 @@ export const getAllLevels = async (req: Request, res: Response) => {
     const { userId } = req.params;
 
     try {
-        const levels = await Level.find({ userId }).sort({ createdAt: -1 });
+        const levels = await Level.find({ userId }).sort({levelId: 1});
         res.status(200).json(levels);
     } catch (error) {
         console.error('Error retrieving levels:', error);
